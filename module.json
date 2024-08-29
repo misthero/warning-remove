@@ -3,9 +3,9 @@
 	"title": "Remove warnings",
 	"description": "Remove resolution warning.",
 	"version": "1.1.0",
-	"url": "https://github.com/misthero/warning-remove",
+	"download": "https://github.com/misthero/warning-remove/archive/refs/tags/v1.1.0.zip",
 	"manifest": "https://raw.githubusercontent.com/misthero/warning-remove/main/module.json",
-	"download": "https://github.com/misthero/warning-remove/archive/refs/heads/main.zip",
+	"url": "https://github.com/misthero/warning-remove",
 	"authors": [
 		{
 			"name": "Misthero",
