@@ -1,0 +1,7 @@
+#notifications .do-not-display {
+  visibility: hidden;
+  display: none;
+  position: fixed;
+  width: 0;
+  overflow: hidden;
+}

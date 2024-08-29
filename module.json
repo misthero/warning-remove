@@ -1,0 +1,25 @@
+{
+	"id": "warning-remove",
+	"title": "Remove warnings",
+	"description": "Remove resolution warning.",
+	"version": "1.0.9",
+	"authors": [
+		{
+			"name": "Misthero",
+			"flags": {}
+		}
+	],
+	"compatibility": {
+		"minimum": "11",
+		"verified": "12",
+		"maximum": "12"
+	},
+	"scripts": [
+		"warning-remove.js"
+	],
+	"styles": [
+		"css/warning-remove.css"
+	],
+	"relationships": {},
+	"socket": false
+}
