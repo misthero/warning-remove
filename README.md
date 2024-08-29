@@ -1,9 +1,20 @@
 # Remove warings - a Foundry VTT module
 
-Ever got annoied by "MESSAGE Foundry Virtual Tabletop requires a minimum screen resolution of 1024px by 700px or greater. Your display currently has an effective resolution of 2560px by 685px, as a result many features of the software may not work properly."?
+### Module Overview
 
-This module does just that, you can configure more warnings or messages you want to hide forever.
+Have you ever been annoyed by the message:
 
-Every client can configure the module indipendently. 
+> *"Foundry Virtual Tabletop requires a minimum screen resolution of 1024px by 700px or greater. Your display currently has an effective resolution of 2560px by 685px; as a result, many features of the software may not work properly."*
 
-The orginal code is from https://github.com/Eunomiac here: https://github.com/League-of-Foundry-Developers/foundryvtt-devMode/pull/59#issuecomment-1905479387, I just modified it a little and made it configurable.
+This module addresses that issue by allowing you to configure and permanently hide such warnings or messages.
+
+### Features
+
+- **Customizable**: You can configure which warnings or messages to hide.
+- **Independent Configuration**: Each client can independently configure the module to their preferences.
+
+### Credits
+
+The original code is from [Eunomiac on GitHub](https://github.com/Eunomiac) at this link: [League-of-Foundry-Developers/foundryvtt-devMode#59 (comment)](https://github.com/League-of-Foundry-Developers/foundryvtt-devMode/issues/59#issuecomment-761050561). I’ve made some modifications to make it configurable.
+
+---
