@@ -7,10 +7,10 @@ let defaultStrings = [
 
 let removeStrings = []
 
-const MODULE_NAME = 'warning-remove';
+const W_R_ID = 'warning-remove';
 
 Hooks.on('ready', () => {
-	game.settings.register(MODULE_NAME, 'qty', {
+	game.settings.register(W_R_ID, 'qty', {
 		name: 'Number of messages to remove',
 		hint: 'default: 3',
 		scope: 'client',
@@ -20,7 +20,7 @@ Hooks.on('ready', () => {
 		config: true
 	});
 
-	const qty = game.settings.get(MODULE_NAME, 'qty');
+	const qty = game.settings.get(W_R_ID, 'qty');
 	for (let s = 0; s < (qty); s++) {
 		let defaultString = "Enter a long Exact message";
 		switch (s) {
@@ -35,7 +35,7 @@ Hooks.on('ready', () => {
 				break;
 		}
 
-		game.settings.register(MODULE_NAME, 'string_' + s, {
+		game.settings.register(W_R_ID, 'string_' + s, {
 			name: 'Message to remove #' + (s + 1),
 			hint: 'Enter the text or part of the text in the message you want to remove, try to enter as much text is possible to avoid removing useful messages. The text must be chase sensitive',
 			scope: 'client',
@@ -45,9 +45,9 @@ Hooks.on('ready', () => {
 			config: true
 		});
 
-		let savedString = game.settings.get(MODULE_NAME, 'string_' + s);
+		let savedString = game.settings.get(W_R_ID, 'string_' + s);
 		if (savedString && savedString.length > 0) {
-			removeStrings.push(game.settings.get(MODULE_NAME, 'string_' + s));
+			removeStrings.push(game.settings.get(W_R_ID, 'string_' + s));
 		}
 	}
 
@@ -55,7 +55,7 @@ Hooks.on('ready', () => {
 	removeStrings = foundry.utils.mergeObject(defaultStrings, removeStrings);
 
 	// reset module
-	game.settings.register(MODULE_NAME, "resetModule", {
+	game.settings.register(W_R_ID, "resetModule", {
 		name: "Reset default options",
 		hint: "Select 'Reset' and save to go back to the module original settings.",
 		scope: "client",
@@ -74,10 +74,10 @@ Hooks.on('ready', () => {
 			const clientStorage = game.settings.storage.get("client");
 			const worldStorage = game.settings.storage.get("world");
 			for (const clientKey of Object.keys(clientStorage)) {
-				if (clientKey.startsWith(MODULE_NAME)) clientStorage.removeItem(clientKey);
+				if (clientKey.startsWith(W_R_ID)) clientStorage.removeItem(clientKey);
 			}
 			for (const worldSetting of worldStorage) {
-				if (worldSetting.key.startsWith(MODULE_NAME)) worldSetting.delete();
+				if (worldSetting.key.startsWith(W_R_ID)) worldSetting.delete();
 			}
 			window.location.reload();
 		}
