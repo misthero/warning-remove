@@ -4,6 +4,9 @@
 
 Have you ever been annoyed by the message:
 
+![immagine](https://github.com/user-attachments/assets/63e8149f-1c14-4e83-ab8f-3eeb0b2f07ef)
+
+
 > *"Foundry Virtual Tabletop requires a minimum screen resolution of 1024px by 700px or greater. Your display currently has an effective resolution of 2560px by 685px; as a result, many features of the software may not work properly."*
 
 This module addresses that issue by allowing you to configure and permanently hide such warnings or messages.
