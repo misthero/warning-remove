@@ -37,7 +37,7 @@ Hooks.on('ready', () => {
 
 		game.settings.register(W_R_ID, 'string_' + s, {
 			name: 'Message to remove #' + (s + 1),
-			hint: 'Enter the text or part of the text in the message you want to remove, try to enter as much text is possible to avoid removing useful messages. The text must be chase sensitive',
+			hint: 'Enter the text or part of the text in the message you want to remove, try to enter as much text is possible to avoid removing useful messages. The text must be case sensitive',
 			scope: 'client',
 			requiresReload: true,
 			default: defaultString,
