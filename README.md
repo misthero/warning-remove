@@ -1,3 +1,5 @@
+![Downloads](https://img.shields.io/github/downloads/misthero/warning-remove/total.svg)
+
 # Remove warings - a Foundry VTT module
 
 ### Module Overview
