@@ -1,15 +1,17 @@
 /* list of default strings to remove */
 let defaultStrings = [
-	"Foundry Virtual Tabletop requires a minimum screen resolution",
+	"Foundry Virtual Tabletop requires",
 	"not displayed because the game Canvas is disabled",
 	"is unmaintained and may introduce stability issues"
 ];
 
 let removeStrings = []
 
+// CONFIG.debug.hooks = true
+
 const W_R_ID = 'warning-remove';
 
-Hooks.on('ready', () => {
+Hooks.on('init', () => {
 	game.settings.register(W_R_ID, 'qty', {
 		name: 'Number of messages to remove',
 		hint: 'default: 3',
@@ -93,60 +95,59 @@ Hooks.on('ready', () => {
  *
  * This function should be run during the "ready" Hook call.
  */
-function InitNotificationsProxy(patternsToHide = []) {
-	// Do nothing if no patterns are provided.
-	if (!patternsToHide.length) { return; }
+Hooks.once("canvasReady", () => {
+	if (!ui.notifications) {
+		console.error("ui.notifications is not initialized. Skipping notification interception.");
+		return;
+	}
 
-	// Get the original array of queued notifications, and store a constant reference to it
-	const notificationQueue = ui.notifications.queue;
+	// List of patterns to block
+	const patternsToBlock = removeStrings;
 
-	// Convert the provided patterns into regular expressions
-	const regExpPatterns = patternsToHide.map((pattern) => new RegExp(pattern));
+	console.log("Patterns to block:", removeStrings);
 
-	// Define a handler for the proxy that will be used to intercept notifications
-	const handler = {
-		set: function (target, property, value) {
-			// Handle changes to the array length property
-			if (property === "length") {
-				// Perform the default behavior for length changes
-				target.length = value;
-				return true; // Indicate success
-			}
-			// Handle directly setting the value for non-index properties (necessary for array methods like 'next')
-			else if (typeof property === "string" && isNaN(Number(property))) {
-				// Perform the default behavior for non-index properties.
-				target[property] = value;
-				return true; // Indicate success
-			}
-			// Handle setting array indices
-			else if (!isNaN(Number(property))) {
-				// If the value is a notification and its content matches one of the provided patterns ...
-				if (value
-					&& typeof value === "object"
-					&& "message" in value
-					&& typeof value.message === "string"
-					&& regExpPatterns.some((pattern) => pattern.exec(value.message))) {
-					// ... edit the notification to:
-					Object.assign(value, {
-						console: false, // ... prevent logging it to the console
-						permanent: false, // ... ensure the notification element is removed automatically
-						type: "do-not-display" // ... 'hack' the type to add the 'do-not-display' class
-					});
+	// Convert patterns to regular expressions
+	const regExpPatterns = patternsToBlock.map(pattern => new RegExp(pattern, "i"));
+
+	// Save the original notify method
+	const originalNotify = ui.notifications.notify;
+
+	// Override the notify method
+	ui.notifications.notify = function (message, type = "info", opts = {}) {
+		// Shallow-copy options so we don't mutate the caller's object
+		const options = foundry.utils.mergeObject({ localize: false, escape: true, clean: true, format: null }, opts, { inplace: false });
+
+		// 1) Normalize to string (or Error.message)
+		let text = message instanceof Error ? message.message : String(message);
+
+		// 2) Apply formatting placeholders if present
+		if (options.format) {
+			if (options.escape) {
+				for (let k of Object.keys(options.format)) {
+					options.format[k] = foundry.utils.escapeHTML(options.format[k]);
 				}
-				// Otherwise, perform the default behavior for setting index properties.
-				target[Number(property)] = value;
-				return true; // Indicate success
+				// If it’s a real localization key, no extra cleaning
+				if (game.i18n.has(text)) options.clean = false;
 			}
-			return false; // Indicate failure for all other cases
+			text = game.i18n.format(text, options.format);
 		}
+		// 3) Otherwise localize if requested
+		else if (options.localize) {
+			if (game.i18n.has(text)) options.clean = false;
+			text = game.i18n.localize(text);
+		}
+		// 4) Finally clean HTML if still flagged
+		if (options.clean) text = foundry.utils.cleanHTML(text);
+
+		// Check if the message matches any of the patterns
+		if (regExpPatterns.some(pattern => pattern.test(text))) {
+			console.warn(`Blocked notification [${type}]: ${text}`);
+			return; // Prevent the notification from being displayed
+		}
+
+		// Call the original notify method for non-blocked messages
+		return originalNotify.call(this, message, type, options);
 	};
 
-	// Replace the notifications queue array with a Proxy defined by the above handler.
-	ui.notifications.queue = new Proxy(notificationQueue, handler);
-}
-// Initialize the notifications proxy during the 'ready' hook, after ui.notifications has been defined
-Hooks.once("ready", () => {
-	// I've hard-coded the two notifications I want to hide, but this could easily be a
-	//   user setting, allowing users to customize which notifications are silenced.
-	InitNotificationsProxy(removeStrings);
+	console.log("Notification interception initialized.");
 });
