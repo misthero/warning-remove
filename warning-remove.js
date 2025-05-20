@@ -124,7 +124,9 @@ Hooks.once("canvasReady", () => {
 		if (options.format) {
 			if (options.escape) {
 				for (let k of Object.keys(options.format)) {
-					options.format[k] = foundry.utils.escapeHTML(options.format[k]);
+					if (typeof foundry.utils.escapeHTML === "function") {
+						options.format[k] = foundry.utils.escapeHTML(options.format[k]);
+					}
 				}
 				// If it’s a real localization key, no extra cleaning
 				if (game.i18n.has(text)) options.clean = false;
@@ -137,7 +139,9 @@ Hooks.once("canvasReady", () => {
 			text = game.i18n.localize(text);
 		}
 		// 4) Finally clean HTML if still flagged
-		if (options.clean) text = foundry.utils.cleanHTML(text);
+		if (typeof foundry.utils.cleanHTML === "function") {
+			if (options.clean) text = foundry.utils.cleanHTML(text);
+		}
 
 		// Check if the message matches any of the patterns
 		if (regExpPatterns.some(pattern => pattern.test(text))) {
