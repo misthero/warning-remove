@@ -96,6 +96,10 @@ Hooks.on('init', () => {
  * This function should be run during the "ready" Hook call.
  */
 Hooks.once("canvasReady", () => {
+	removeWarnings(removeStrings);
+});
+
+removeWarnings = (removeStrings) => {
 	if (!ui.notifications) {
 		console.error("ui.notifications is not initialized. Skipping notification interception.");
 		return;
@@ -154,4 +158,4 @@ Hooks.once("canvasReady", () => {
 	};
 
 	console.log("Notification interception initialized.");
-});
+}

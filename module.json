@@ -1,28 +1,27 @@
 {
-	"id": "warning-remove",
-	"title": "Remove warnings",
-	"description": "Remove notifications and warning.",
-	"version": "2.0.2",
-	"download": "https://github.com/misthero/warning-remove/releases/download/v2.0.2/warning-remove.zip",
-	"manifest": "https://github.com/misthero/warning-remove/releases/download/v2.0.2/module.json",
-	"url": "https://github.com/misthero/warning-remove",
-	"authors": [
-		{
-			"name": "Misthero",
-			"flags": {}
-		}
-	],
-	"compatibility": {
-		"minimum": "11",
-		"verified": "13",
-		"maximum": "13"
-	},
-	"scripts": [
-		"warning-remove.js"
-	],
-	"styles": [
-		"css/warning-remove.css"
-	],
-	"relationships": {},
-	"socket": false
+    "id": "warning-remove",
+    "title": "Remove warnings",
+    "description": "Remove notifications and warning.",
+    "version": "2.1.4",
+    "download": "https://github.com/misthero/warning-remove/releases/download/v2.1.4/warning-remove.zip",
+    "manifest": "https://github.com/misthero/warning-remove/releases/latest/download/module.json",
+    "url": "https://github.com/misthero/warning-remove",
+    "authors": [
+        {
+            "name": "Misthero",
+            "flags": {}
+        }
+    ],
+    "compatibility": {
+        "minimum": "11",
+        "verified": "14"
+    },
+    "scripts": [
+        "warning-remove.js"
+    ],
+    "styles": [
+        "css/warning-remove.css"
+    ],
+    "relationships": {},
+    "socket": false
 }
