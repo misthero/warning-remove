@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [2.1.5]
+
+- Foundry v14 Compatibility
+
 ## [2.0.2]
 
 - Bugfix
