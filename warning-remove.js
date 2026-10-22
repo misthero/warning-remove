@@ -99,6 +99,11 @@ Hooks.once("canvasReady", () => {
 	removeWarnings(removeStrings);
 });
 
+/** on mobile devices, the "canvasReady" hook may not fire immediately, so we also run on the "ready" hook */
+Hooks.once("ready", () => {
+	removeWarnings(removeStrings);
+});
+
 removeWarnings = (removeStrings) => {
 	if (!ui.notifications) {
 		console.error("ui.notifications is not initialized. Skipping notification interception.");
